@@ -185,16 +185,15 @@ function lastPage(){
     localStorage.setItem("highscore", testScore);
     location.replace("index2.html");
 
-    highScoresP.textContent = localStorage.getItem("initials", initials) + localStorage.getItem("highscore", testScore);
     
-     goBack.addEventListener('click', function(event){
-       event.preventDefault();
-         location.href = "index.html";
-    
-     })
 
   })
 }
+
+
+    highScoresP.textContent = localStorage.getItem("initials", initials) + localStorage.getItem("highscore", testScore);
+    
+    
 
 
 function displayFirstPage(){
