@@ -20,7 +20,7 @@ var goBack = document.querySelector("#GoBack");
 var initialslabel = document.querySelector("#initialslabel");
 var highScoresP = document.querySelector("#highscores");
 var firstPageTime = document.querySelector("#tick");
-var interval;
+
 
 var quiz = [
       {question: '1.  Commonly used data types do not include:',
@@ -54,11 +54,39 @@ var quiz = [
 
 var idx = 0;
 var quizLength=quiz.length;
+var interval;
+var startSeconds = 60;
+var endSeconds = 0;
+var timeSpan
 SubmitBtn.style.display = "none";
 form.style.display = "none";
-interval = setInterval(function() {
-  firstPageTime.textContent = "Time: "+interval
-}, 1000);
+keepTime();
+
+function keepTime (){
+   interval = setInterval(function() {
+   timeSpan = startSeconds - endSeconds;
+   endSeconds = Math.floor((timeSpan % (1000 * 60)) / 1000);
+   startSeconds --;
+   console.log("startSeconds "+startSeconds)
+   console.log("timeSpan "+timeSpan);
+   console.log("endSeconds "+ endSeconds)
+   firstPageTime.textContent = timeSpan; 
+   if (timeSpan <= 0){
+     clearInterval(interval)
+     
+   }
+}, 1000)
+};
+
+function endOfTime(){
+    startSeconds =0;
+    endSeconds = 0;
+    timeSpan = 0;
+
+     firstPageTime.textContent = timeSpan; 
+};
+
+
 startBtn.addEventListener('click', function(){
   
   displayFirstPage();
@@ -138,7 +166,8 @@ function addAndDisplay(){
 // Quiz is complete, shows score and allows initial entries into High Scores, stores them and takes you to next page.
 
 function lastPage(){
-  
+
+  endOfTime();
   quizTitle.style.display = "block"
   quizTitle.textContent = "All Done!";
   quizQuestions.textContent = "Your final score is "+testScore;
