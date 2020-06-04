@@ -16,10 +16,11 @@ var questionList = document.querySelector("#question-list");
 var SubmitBtn = document.querySelector("#SubmitBtn");
 var form = document.querySelector("#submit-form")
 var highScoresLink = document.querySelector("#high-scores");
-var goBack = document.querySelector("#GoBack");
+// var goBack = document.querySelector("#GoBack");
 var initialslabel = document.querySelector("#initialslabel");
-var highScoresP = document.querySelector("#highscores");
+// var highScoresP = document.querySelector("#highscores");
 var firstPageTime = document.querySelector("#tick");
+var initials = document.querySelector("#initials");
 
 
 var quiz = [
@@ -67,9 +68,6 @@ function keepTime (){
    timeSpan = startSeconds - endSeconds;
    endSeconds = Math.floor((timeSpan % (1000 * 60)) / 1000);
    startSeconds --;
-   console.log("startSeconds "+startSeconds)
-   console.log("timeSpan "+timeSpan);
-   console.log("endSeconds "+ endSeconds)
    firstPageTime.textContent = timeSpan; 
    if (timeSpan <= 0){
      clearInterval(interval)
@@ -122,7 +120,7 @@ function renderQuestions (){
        var ans = quiz[idx].answer;
     
        var shortChoiceAns = choiceAnswer.substring(0,1);
-        console.log(shortChoiceAns + " " + ans);
+        // console.log(shortChoiceAns + " " + ans);
            if (shortChoiceAns !== ans){
              testScore = testScore - questionScore;
              alert("Incorrect!");
@@ -135,18 +133,12 @@ function renderQuestions (){
                testScore = 0;
              }
 
-          
-         console.log("testscore "+testScore+" questionscore "+questionScore);
-        
+        //  console.log("testscore "+testScore+" questionscore "+questionScore);        
              addAndDisplay();
     
       } )
-
-
-      
     }
-    
-
+  
 }
 
 // increments the index in the question array.
@@ -181,8 +173,12 @@ function lastPage(){
   SubmitBtn.addEventListener('click',function(event){
       event.preventDefault();
 
-    localStorage.setItem("initials", initials);
+    var initialStore = initials.value
+    localStorage.setItem("initials", initialStore);
     localStorage.setItem("highscore", testScore);
+    console.log(localStorage.initials);
+    console.log(localStorage.testScore);
+
     location.replace("index2.html");
 
     
@@ -191,7 +187,7 @@ function lastPage(){
 }
 
 
-    highScoresP.textContent = localStorage.getItem("initials", initials) + localStorage.getItem("highscore", testScore);
+    // highScoresP.textContent = localStorage.getItem("initials", initials) + localStorage.getItem("highscore", testScore);
     
     
 
