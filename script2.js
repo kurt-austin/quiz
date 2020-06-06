@@ -1,19 +1,24 @@
 var goBack = document.querySelector("#GoBack");
 var highScoresP = document.querySelector("#highscores");
-var highScoresTitle = document.querySelector("#quiz-title");
+var highScoresOL = document.createElement("ol");
 
-console.log(localStorage.length);
 
-for (var k=0; k< localStorage.length; k++){
-    var li2 = document.createElement("li");
-    li2.textContent = localStorage.getItem("initials") + " - " + localStorage.getItem("highscore");
-    console.log(li2.textContent);
-    li2.appendChild(highScoresP);
+// parses the local storage back into an array and then loops through the array and creates and appends li elements under an ol element in HTML.
 
-}
+var arr = JSON.parse(localStorage.getItem("gamescores"));
 
-// highScoresP.textContent = localStorage.getItem("initials") + " - " + localStorage.getItem("highscore");
 
+
+ for (var k=0; k< arr.length; k++){
+   var li = document.createElement("li")
+   li.textContent = arr[k];
+   highScoresOL.appendChild(li);
+   highScoresP.appendChild(highScoresOL);
+    
+ }
+
+
+// Go Back button to the beginning of the quiz.
 
 goBack.addEventListener('click', function(event){
     event.preventDefault();
@@ -21,10 +26,11 @@ goBack.addEventListener('click', function(event){
  
   })
 
+  // Clears High Scores from Local Storage
 
 ClearHighScores.addEventListener('click', function(event){
     event.preventDefault();
     localStorage.clear();
-    highScoresTitle.style.display = "none";  
+    highScoresOL.style.display = "none";  
  
   })

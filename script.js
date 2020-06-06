@@ -59,9 +59,10 @@ var interval;
 var startSeconds = 60;
 var endSeconds = 0;
 var timeSpan
-SubmitBtn.style.display = "none";
 form.style.display = "none";
 keepTime();
+
+// Timer 60 seconds.
 
 function keepTime (){
    interval = setInterval(function() {
@@ -84,6 +85,8 @@ function endOfTime(){
      firstPageTime.textContent = timeSpan; 
 };
 
+
+// Start Button
 
 startBtn.addEventListener('click', function(){
   
@@ -110,6 +113,7 @@ function renderQuestions (){
 
       questionList.appendChild(li);
 
+// checks the answers against the user response
      
       li.addEventListener('click',function(event){
         event.preventDefault();
@@ -120,7 +124,7 @@ function renderQuestions (){
        var ans = quiz[idx].answer;
     
        var shortChoiceAns = choiceAnswer.substring(0,1);
-        // console.log(shortChoiceAns + " " + ans);
+   
            if (shortChoiceAns !== ans){
              testScore = testScore - questionScore;
              alert("Incorrect!");
@@ -133,7 +137,6 @@ function renderQuestions (){
                testScore = 0;
              }
 
-        //  console.log("testscore "+testScore+" questionscore "+questionScore);        
              addAndDisplay();
     
       } )
@@ -174,10 +177,16 @@ function lastPage(){
       event.preventDefault();
 
     var initialStore = initials.value
-    localStorage.setItem("initials", initialStore);
-    localStorage.setItem("highscore", testScore);
-    console.log(localStorage.initials);
-    console.log(localStorage.testScore);
+    var combo = initialStore + "-" + testScore;
+
+    // checks to see if anything in local storage, takes it out and pushes new value and put it back into local storage. 
+    var existStorage = JSON.parse(localStorage.getItem("gamescores"));
+    if(existStorage ===null){
+       existStorage = [];
+    };
+    existStorage.push(combo);
+    localStorage.setItem("gamescores", JSON.stringify(existStorage));
+    
 
     location.replace("index2.html");
 
@@ -185,11 +194,6 @@ function lastPage(){
 
   })
 }
-
-
-    // highScoresP.textContent = localStorage.getItem("initials", initials) + localStorage.getItem("highscore", testScore);
-    
-    
 
 
 function displayFirstPage(){
